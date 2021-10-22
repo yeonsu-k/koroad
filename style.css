@@ -4,21 +4,25 @@
 }
 
 .header {
-    width: 100%;
+    width: 1080px;
     height: 60px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.header-block1 {
+    width: 20%;
+    height: 300px;
+    margin-top : 15px;
+    margin-left : 20px;
+    margin-bottom: 30px;
+    background-color: rgb(126, 233, 153);
 }
 
 .container {
     width: 1080px;
     margin: 0 auto;
     margin-top: 30px;
-}
-
-.block1-1 {
-    width: 100%;
-    height: 300px;
-    margin-bottom: 30px;
-    background-color: seashell;
 }
 
 .block1-2 {
