@@ -62,19 +62,22 @@
       margin-right: 30px;
     }
   .block1-1 {
-    width: 100%;
+    max-width:1080px;
+    width: 100vw;
     height: 300px;
     margin-bottom: 30px;
     background-color: lightyellow;
   }
   .block1-2 {
-    width: 100%;
+    max-width:1080px;
+    width: 100vw;
     height: 200px;
     margin-bottom: 30px;
     background-color: lightyellow;
   }
   .block1-3 {
-    width: 100%;
+    max-width:1080px;
+    width: 100vw;
     height: 250px;
     background-color: lightyellow;
   }
