@@ -1,10 +1,11 @@
 <!doctype html>
 <html>
 <head>
-  <title>제보통계|제보지도</title>
+  <title>제보통계 | 제보지도</title>
   <meta charset="utf-8">
   
   <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2583952b975cdb2ab0d85290a43e1fb9"></script>
 </head>
 
 <body>
@@ -20,29 +21,52 @@
     </div>
    </header>
    <img src="./img/koroading.jpg"width="100%">
-   <div class="container">  
+   <div class="container">
       <nav id="subMenu">
         <ul>
-          <li><a class="Link" href="#">제보통계</a></li>
-          <li><a class="Link" href="#">제보지도</a></li>
+          <li><a class="Link" href="#!stats" onclick="statsPage()">제보 통계</a></li>
+          <li><a class="Link" href="#!map" onclick="mapPage()">제보 지도</a></li>
         </ul>
-       </nav>
-      <div class="content1">
-         <div class="block1-1"></div>
-         <div class="block1-2"></div>
-         <div class="block1-3"></div>
-      </div>  
+      </nav>
+      <div id="content" style="width:100%;height:450px;">
+      </div>
+      <script>
+      function mapPage(){
+        var mapContainer = document.getElementById('content'), // 지도를 표시할 div 
+        mapOption = { 
+            center: new kakao.maps.LatLng(36.33565, 127.3666), // 지도의 중심좌표
+            level: 4 // 지도의 확대 레벨
+        };
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+        var markerPosition  = new kakao.maps.LatLng(36.3356, 127.3666);  // 마커가 표시될 위치입니다 
+        var marker = new kakao.maps.Marker({ // 마커를 생성합니다
+         position: markerPosition
+        });
+        marker.setMap(map);
+      }
+      function statsPage(name){
+        fetch('stats').then(function(response){
+          response.text().then(function(text){
+          document.getElementById('content').style.background="white";
+          document.getElementById('content').innerHTML = text;
+          })
+        });
+      }
+      if(location.hash){
+        if(location.hash.substr(2)=='map') mapPage();
+        else statsPage(); 
+      }
+      else statsPage();
+      </script>   
    </div>
    <footer>
       <div class="footer_inner">
        <img src="https://www.tbn.or.kr/images/common/logo_1.png" alt="도로교통방송 logo">
-       <li> TBN대전교통방송 공공빅데이터 인턴 : 김연수 | 김보희
-       
+       <li> 제작) TBN대전교통방송 공공빅데이터 청년인턴 : 김연수 | 김보희
        <p>&copy; 26466 강원도 원주시 혁신로 2 (반곡동) 도로교통공단 방송본부 TEL : 033-749-5000 / FAX : 033-749-5908
           <br>(우 06792) 서울특별시 서초구 양재대로 242, TBN 서울방송본부 TEL : 02-2233-9977 / FAX : 02-3495-2029
           <br>COPYRIGHT@ 2011 KoROAD ALL Rights Reserved</p>
     </footer>
   </body>
   </html>
-  <!--가로 해상도 1024 이상-->
   
