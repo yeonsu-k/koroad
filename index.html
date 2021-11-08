@@ -24,22 +24,21 @@
    <div class="container">
       <nav id="subMenu">
         <ul>
-          <li><a class="Link" href="#!stats" onclick="statsPage(./pphp/stats.php)">제보 통계</a></li>
+          <li><a class="Link" href="#!stats" onclick="statsPage()">제보 통계</a></li>
           <li><a class="Link" href="#!map" onclick="mapPage()">제보 지도</a></li>
         </ul>
       </nav>
-        <!--<div id="content" style="width:100%;height:350px"> -->
-       <iframe id="content" src="./img/koroading.jpg" style="width:100%; height:350px">
+      <iframe id="phpCon" scrolling="no"; style="width:100%; border:0; display:none;"></iframe>
+      <div id="mapCon" style="width:100%;height:500px"> </div>
         <!-- ** 핸드폰에서 사이즈 안 맞음
           방법 1. div새로 추가해서  사이즈 조절하기
           방법 2. @미디어 써서 동적으로 만들기....(한땀한땀ㅠㅠ)
         -->
-      </iframe>
-
-
      <script>
       function mapPage(){
-        var mapContainer = document.getElementById('content'), // 지도를 표시할 div 
+        document.getElementById("phpCon").style.display="none";
+        document.getElementById("mapCon").style.display="block";
+        var mapContainer = document.getElementById('mapCon'), // 지도를 표시할 div 
         mapOption = { 
             center: new kakao.maps.LatLng(36.33565, 127.3666), // 지도의 중심좌표
             level: 4 // 지도의 확대 레벨
@@ -51,34 +50,34 @@
         });
         marker.setMap(map);
       }
-      function statsPage(url){
-        document.getElementById("content").src=url;
-      }
-      /*
-      function statsPage(name){
-        fetch('stats').then(function(response){
-          response.text().then(function(text){
-          document.getElementById('content').style.background="white";
-          document.getElementById('content').innerHTML = text;
-          })
+
+     function statsPage(){
+        document.getElementById("mapCon").style.display="none";
+        document.getElementById("phpCon").style.display="block";
+        document.getElementById("phpCon").src="./in.php";
+        let iframe = document.querySelector("#phpCon"); 
+          iframe.addEventListener('load', function() {
+            iframe.style.height = iframe.contentDocument.body.scrollHeight + 'px'; 
+            iframe.style.width = iframe.contentDocument.body.scrollWidth + 'px'; 
         });
       }
-      */
+
       if(location.hash){
         if(location.hash.substr(2)=='map') mapPage();
         else statsPage(); 
       }
-      else statsPage();
+      else statsPage(); 
+
       </script>   
    </div>
    <footer>
       <div class="footer_inner">
        <img src="https://www.tbn.or.kr/images/common/logo_1.png" alt="도로교통방송 logo">
-       <li> 제작) TBN대전교통방송 공공빅데이터 청년인턴 : 김연수 | 김보희
-       <p>&copy; 26466 강원도 원주시 혁신로 2 (반곡동) 도로교통공단 방송본부 TEL : 033-749-5000 / FAX : 033-749-5908
+        <p><li> 제작) TBN대전교통방송 공공빅데이터 청년인턴 : 김연수 | 김보희 </li>
+          &copy; 26466 강원도 원주시 혁신로 2 (반곡동) 도로교통공단 방송본부 TEL : 033-749-5000 / FAX : 033-749-5908
           <br>(우 06792) 서울특별시 서초구 양재대로 242, TBN 서울방송본부 TEL : 02-2233-9977 / FAX : 02-3495-2029
-          <br>COPYRIGHT@ 2011 KoROAD ALL Rights Reserved</p>
-          <br> 추가1
+          <br>COPYRIGHT@ 2011 KoROAD ALL Rights Reserved
+        </p>
     </footer>
   </body>
   </html>
