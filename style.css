@@ -1,0 +1,119 @@
+   * {
+     margin: 0;
+     padding: 0;
+   }
+
+   a{
+    text-decoration:none;
+    color : black;    
+   }
+
+   html{font-size: 62.5%;}
+
+   header {
+    width: 100vw; 
+    top: 0;
+    left: 0;
+    padding: 1.6rem;
+    background: white;
+    font-weight: bold;
+    justify-content: space-around;
+    display: flex;
+    flex-wrap: nowrap;
+    position: fixed;
+    align-items: center;
+    border-bottom: 0.1rem solid lightgray;
+   }
+
+   .wrapper{min-width: 550px;width:85vw; margin:0 auto; padding:0.1vw;} 
+   
+   h1{margin: 0; float:left;}
+   
+   h1 img{min-width:250px; width:20vw; margin-left: -5vw; display: block;}
+   
+   .menu{padding:0; margin:0; float:right;}
+   
+   .header_menu{ font-size: 1.6rem;line-height:38px; float: left; padding: 0 3rem; }
+   
+   body{
+      margin:0;
+      padding-top : 70px;
+    }
+    
+    #subMenu{max-width:1080px; width:100vw; height: 30px; margin-bottom: 5px;}
+    
+    #subMenu ul li{
+      list-style: none;
+      color: white;  
+      background-color: #404441fb;  
+      float: left;
+      width: 50vw;
+      max-width:540px; 
+      line-height: 30px;  
+      vertical-align: middle;
+      text-align: center;   
+    }
+   
+    #subMenu .Link {                               
+      text-decoration:none;                      
+      color: white;                              
+      display: block;                            
+      width: 100%;                             
+      font-size: 1.3rem;                           
+      font-weight: bold;                         
+      font-family: Arial; 
+    }
+   
+    #subMenu .Link:hover {                            
+      background-color: #555e56;    
+    }
+    
+    .container{
+      display:flex;   /*추가*/
+      flex-flow: column nowrap; /*추가*/
+      width: 1080px;
+      margin: 0 auto;
+     }
+   
+     /* .content {
+       width: 500px;
+       height:450px;
+       margin-right: 30px;
+    } */
+
+
+   .block1-1 {
+    max-width:1080px;
+    width: 100vw;
+    height: 300px;
+    margin-bottom: 30px;
+    background-color: lightyellow;
+  }
+  .block1-2 {
+    max-width:1080px;
+    width: 100vw;
+    height: 200px;
+    margin-bottom: 30px;
+    background-color: lightyellow;
+  }
+  .block1-3 {
+    max-width:1080px;
+    width: 100vw;
+    height: 250px;
+    background-color: lightyellow;
+  }
+
+  .footer_inner{
+    width:100vw; height:120px;
+    border-top:10px solid #fff;
+    background-color:#f1faeb;
+    padding-top: 20px;  
+    position:relative;
+    text-align:center;
+  }
+
+  footer p{ font-size: large; }
+   
+  footer li {font-size: 10px;}
+  
+  footer img { width:280px; padding-bottom: 5px;}
