@@ -1,0 +1,23 @@
+<h1><img src="https://www.tbn.or.kr/images/common/logo_1.png"width="50%"></h1>
+ https://www.daleseo.com/css-position-fixed-navigation/         //* 홈페이지 header 만드는법
+ https://cheonmro.github.io/2019/11/12/aligns/         //*수평정렬하는법
+https://ji5485.gitbook.io/web-practice-1/container-ad6c-c131/container-d2c0-ad6c-c131
+ // 홈페이지 틀 콘텐츠
+
+https://sso-feeling.tistory.com/183 		// 상단바
+https://programacion.tistory.com/96		// 상단바 클릭했을 때 색상 변하기
+https://iwbtbitj.tistory.com/128		// 가로형 서브 메뉴 만들기
+https://nykim.work/85 			// 반응형 웹만들기
+https://hohoya33.tistory.com/128		// iframe 높이 불러온 웹 크기대로 변환 
+
+https://saem-ee.tistory.com/20		// 특정 div 새로고침하기
+https://sir.kr/qa/278998			// php 사용자 없이 자동 새로고침 하는법
+
+// 스크롤할 내릴 때 페이지 컨텐츠 애니메이션 효과 내기
+https://urliveblogger.blogspot.com/2021/01/jquery-plugin-aos.html	  
+
+**** Ajax ****
+https://m.blog.naver.com/sssang97/221640020197	 //Ajax 시간 자동으로
+https://boxfoxs.tistory.com/293		// JQuery를 이용해 화면갱신(Ajax)
+
+https://www.stechstar.com/user/zbxe/phpWebProg/68645    // R과 PHP 연동하기 +html
