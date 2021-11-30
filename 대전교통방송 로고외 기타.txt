@@ -12,6 +12,11 @@ https://hohoya33.tistory.com/128		// iframe 높이 불러온 웹 크기대로 �
 
 https://saem-ee.tistory.com/20		// 특정 div 새로고침하기
 https://sir.kr/qa/278998			// php 사용자 없이 자동 새로고침 하는법
+https://salix97.tistory.com/181		// php에서 이미지 데이터베이스로 업로드하는 법
+https://www.ibm.com/docs/ko/db2/11.1?topic=php-executing-single-sql-statement  // php에서 단일 sql문 실행하기
+
+https://blog.naver.com/errorsoft666/221695261264	// 리눅스에서 웹 서버 구축하기
+https://yjshin.tistory.com/entry/%ED%99%88-%ED%8E%98%EC%9D%B4%EC%A7%80-%EB%A7%8C%EB%93%A4%EA%B8%B0-1-%EC%9B%B9-%EC%84%9C%EB%B2%84-OS-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0 // 가상머신 웹 서버 구축 하기
 
 // 스크롤할 내릴 때 페이지 컨텐츠 애니메이션 효과 내기
 https://urliveblogger.blogspot.com/2021/01/jquery-plugin-aos.html	  
@@ -21,3 +26,5 @@ https://m.blog.naver.com/sssang97/221640020197	 //Ajax 시간 자동으로
 https://boxfoxs.tistory.com/293		// JQuery를 이용해 화면갱신(Ajax)
 
 https://www.stechstar.com/user/zbxe/phpWebProg/68645    // R과 PHP 연동하기 +html
+http://dev.epiloum.net/1641 			// php에 R 스크립트를 직접 작성
+http://tech.ubcare.co.kr/post/2021/06/28/r-in-sql.html  // SQL에서 R실행하기
