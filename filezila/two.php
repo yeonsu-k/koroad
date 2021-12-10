@@ -1,19 +1,45 @@
 <?php
 $output=null;
 $retval =null;
-//chmod('/host/home4/koroad/html/',0777);  //chmod(파일이름, 권한)
-exec("/bin/bash /host/home4/koroad/html/sample.R",$outfut,$retval);
+
+echo exec("/bin/bash /html/sample.Rscript",$outfut,$retval);
 echo "Returned with status $retval and output:\n";
 print_r("$outfut");
-$nocache = rand();
-echo("<img src='temp.png?'/>");
+
+//chmod('/host/home4/koroad/html/',0777);  //chmod(파일이름, 권한)
+//echo exec("/bin/bash /host/home4/koroad/html/sample.R",$outfut,$retval);
+
+?>
+
+
+<!--W
+
+echo "";
+echo "Number values to generate:";
+echo "Submit";
+echo ""
+;
+
+if(isset($_GET['N']))
+{
+  $N = $_GET['N'];
+
+  // execute R script from shell
+  // this will save a plot at temp.png to the filesystem
+  exec("Rscript my_rscript.R");
+
+  // return image tag
+  $nocache = rand();
+  echo("");
+}
+?>
 
 // if(isset($_GET['N']))
 // {
 //   $N = $_GET['N'];
  
 //   exec("sample.R $N",$outfut,$retval);
-//   echo "Returned : $retval : \n";
+//   echo "Returned : $retval : /n";
 //   print_r($output);
  
 //   // return image tag
@@ -30,5 +56,4 @@ echo("<img src='temp.png?'/>");
 // 권한 바꾸는 법 : https://webisfree.com/2015-01-02/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%9C%A0%EB%8B%89%EC%8A%A4-%ED%8C%8C%EC%9D%BC-%EA%B6%8C%ED%95%9C-%EC%84%A4%EC%A0%95-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-777-755
 // https://www.lesstif.com/ws/%ED%8F%B4%EB%8D%94%EC%99%80-%ED%8C%8C%EC%9D%BC%EC%97%90-%EC%A0%81%EC%A0%88%ED%95%9C-%EA%B6%8C%ED%95%9C-%EB%B6%80%EC%97%AC-43844145.html
 // https://action713.tistory.com/entry/%ED%8D%BC%EB%AF%B8%EC%85%98-%EC%84%A4%EC%A0%95?category=554899
-
-?>
+-->
