@@ -1,0 +1,185 @@
+---
+title: "crash_info_realtime"
+author: "kim bo hee"
+date: '2021 12 8 '
+output:
+  word_document: default
+  html_document: default
+editor_options: null
+chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(DBI)
+library(odbc)
+library(RPostgreSQL)
+library(RPostgres)
+
+library(dplyr)
+library(tidyverse)
+library(data.table)
+library(DT)
+library(lubridate)
+
+library(sp)
+library(leaflet)
+library(htmltools)
+library(plotly)
+library(RColorBrewer)
+library(tmaptools)
+library(showtext)
+```
+
+### DB -> R로 데이터 다시 불러오기 
+```{r}
+pw <- {"bohee30507"}
+
+# connect to database
+con <- DBI::dbConnect(RPostgres::Postgres(),
+                      dbname = "postgres",
+                      host = "localhost",
+                      port = "5432",
+                      user="postgres",
+                      password = "bohee30507")
+
+# 테이블 불러오기
+
+# table 불러오기
+que_get <- 'select *
+            from "traffic_info";'
+get_taffic_info <- dbGetQuery(con, que_get)
+get_taffic_info %>% str()
+get_taffic_info$cont.date <- get_taffic_info$cont.date %>% ymd_hm(tz='Asia/Seoul') 
+```
+
+### 전처리 
+```{r}
+crash_realtime <- get_taffic_info
+crash_realtime %>% head() 
+crash_realtime <- crash_realtime %>% select(-cont.type) %>% arrange(cont.date) 
+crash_realtime %>% tail() 
+
+# 중복제보 제거 
+crash_realtime <- crash_realtime %>% filter(!str_detect(cont.text,"중복"))
+crash_realtime <- crash_realtime %>% filter(!str_detect(cont.text,"같은사고"))
+crash_realtime <- crash_realtime %>% filter(!str_detect(cont.text,"사고동일"))
+
+crash_realtime$date <- crash_realtime$cont.date %>% substr(1, 10) %>% as.Date() 
+crash_realtime$time <- crash_realtime$cont.date %>% substr(12,13) %>% hours() %>% hour() 
+```
+
+### 지역별로 최근 5건의 사고만 불러오기 
+```{r}
+crash_realtime_5 <- crash_realtime %>% group_by(juso) %>% slice_max(cont.date , n=5)
+crash_realtime_5 <- crash_realtime_5 %>% select( juso,-cont.date, date, time, cont.text)
+
+crash_realtime_5 %>% 
+  datatable(rownames = NULL, colnames = c("지역","제보일자", "제보시간", "내용"),
+            filter ='bottom', style='default',
+            extensions = "Buttons", 
+            options = list(
+              dom = "Bfrtip",
+              buttons = c("csv",'excel','pdf', 'print'), pagelength =10
+  ), width = 700, height = 500 ,class = 'cell-border stripe')
+
+
+```
+
+### 지역별로 당일 사고 제보접수만 불러오기  
+```{r}
+crash_realtime_today <- crash_realtime %>% filter( date== Sys.Date())
+crash_realtime_today <- crash_realtime_today %>% group_by(juso) %>% slice_max(juso)
+crash_realtime_today_cnt <- table(crash_realtime_today$juso) %>% as.data.frame() 
+crash_realtime_today_lasted <-  crash_realtime_today %>% slice_max(cont.date, n=1)
+crash_realtime_today_cnt <-left_join(crash_realtime_today_cnt,crash_realtime_today_lasted, by=c('Var1'='juso') )
+
+
+## 시도별 위치정보 csv 파일 
+sido_xy <- read.csv("C:\\Users\\user\\Desktop\\koroad_bigdata\\시도별 위치정보.csv") 
+crash_realtime_today_xy <- left_join( sido_xy[-18,], crash_realtime_today_cnt, by=c('gubun'='Var1')) 
+```
+
+
+### 월별 제보건수 비교
+```{r}
+### ggplot 한글 폰트 설정 
+font_add_google("Nanum Gothic", "nanumgothic")
+font_add_google("Poor Story", "poorstory")
+
+showtext_auto()
+
+crash_realtime_stat <- crash_realtime 
+crash_realtime_stat %>% head() 
+crash_realtime_stat$month <- crash_realtime_stat$date %>% month() 
+realtime_tb <- table(crash_realtime_stat$juso, crash_realtime_stat$month) %>% as.data.frame() 
+realtime_tb$Var2 <- realtime_tb$Var2 %>% as.factor() 
+
+realtime_tb %>% 
+  ggplot(aes(x=reorder(Var1,Freq), y=Freq, fill=Var2)) +
+   geom_col(position='dodge', show.legend=T, colour="grey") +
+   geom_text(aes(label=Freq), size=4, show.legend=F, vjust=-0.3,
+             position=position_dodge(width=1))+
+   labs(x=NULL, y=NULL, title ='월별 제보건수')+
+   scale_fill_manual(values=get_brewer_pal(plot=F, "Set2"),
+                     name="월", labels=c("11월","12월"))+
+   theme_minimal()+
+   theme(plot.title=element_text(family="nanumgothic", face="bold",
+                                   hjust=0.5, vjust=-2, size=15),
+         axis.text=element_text(family="nanumgothic", face="bold", size=10))
+
+```
+
+
+### 지도 시각화 
+```{r}
+### 시도 : shp
+### 시군구: SIG.shp
+library(sp)
+shp.file <-  "C:\\Users\\user\\Desktop\\data visual\\shape file_CTPRVN_202005_시도별\\CTPRVN.shp"
+
+### read shape file
+shp <- rgdal::readOGR(shp.file)
+shp@data
+
+### 좌표 확인: UTM-K(GRS-80) 좌표계에서 WGS84 경위도 좌표계로 변환
+from.crs <- "+proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +units=m +no_defs"
+to.crs <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+shp <- spTransform(shp, to.crs) # 좌표계가 올바르게 변함
+
+
+crash_realtime_today_xy$gubun2 <-c("대구광역시", '부산광역시','서울특별시', '경기도', '세종특별자치시', '울산광역시',
+                                  '대전광역시', '광주광역시', '인천광역시', '경상북도', '전라남도', '전라북도', 
+                                  '충청남도', '충청북도','강원도', '제주특별자치도', '경상남도')
+shp@data <- left_join(shp@data, crash_realtime_today_xy, by=c("CTP_KOR_NM"="gubun2"))
+
+
+### leaflet
+library(leaflet)
+library(htmltools)
+
+#### leaflet_다각형 색상 - 인구수(연속형) 
+pal.bin <- colorBin("BuGn", domain = shp@data$Freq, bins = 7)
+popups <- paste0("최근 제보일자: ",shp$cont.date, "<br>",
+                 "총 제보건수: ", shp$Freq, "건<br>")
+labels <- paste0("<strong>", shp$gubun,"<br>", paste0("▲", shp$Freq), "<br>")
+             
+
+leaflet(shp) %>% setView(lng= 128, lat=36, zoom=6.5) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addPolygons(dashArray = "3",
+              fillColor = ~pal.bin(Freq), fillOpacity = 0.8, # 다각형 안의 색 불투명도
+              color="#444444", weight=2,opacity=0.5 , #라인의 색, 두께, 불투명도 
+              highlightOptions = highlightOptions(color="white", weight=2, bringToFront=TRUE),
+              label=~labels %>% lapply(htmltools::HTML),
+              labelOptions= labelOptions(
+                noHide = F, textOnly = F,
+                style = list("font-weight" = "normal", padding = "5px 5px"),
+                textsize = "13px", direction = "center"), popup=~popups)
+
+
+```
+
