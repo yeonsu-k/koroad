@@ -133,6 +133,85 @@ realtime_tb %>%
 
 ```
 
+### 일별 제보 건수(필터링 사용)
+```{r}
+crash_realtime
+crash_realtime %>% head()
+crash_readtime_da <- crash_realtime %>%  select(date,juso)
+crash_readtime_da <- crash_readtime_da %>% table() %>% as.data.frame()
+
+
+m <- list(
+  l = 50,
+  r = 50,
+  b =50,
+  t = 100,
+  pad = 4
+)
+
+
+
+plot_ly(crash_readtime_da, x=~date, y=~Freq, color=~juso, text =~juso, 
+        colors=c("lightslategray","pink3","skyblue","darkcyan"),
+        type='scatter',line = list(width = 2.5, shape="spline") ,mode='lines',
+        hovertext=~paste0(date, "<br>", Freq,"건"),
+        hoverinfo = 'text',
+        transforms = list(
+                        list(type = 'filter',target = ~juso, operation = 'in', 
+                             value = unique(crash_readtime_da$juso)[1]
+      ))) %>% 
+  layout( autosize = F, width = 650, height = 600, margin = m,
+    title = list(text ='일별 제보 건수',font=list(size=20, family='nanumgothic', face ='bold')),
+    xaxis = list(title="", tickangle=45, tickfont = list(family='nanumgothic', color='crimson', size=15),
+    yaxis = list(title=''),
+   legend=list(bgcolor='rgba(255,255,255,0)',bordercolor='rgba(255,255,255,0)')),
+   updatemenus = list(
+      list(
+        type = 'dropdown',
+        active = 0,
+        buttons = list(
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[1]),
+               label = unique(crash_readtime_da$juso)[1]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[2]),
+               label = unique(crash_readtime_da$juso)[2]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[3]),
+               label = unique(crash_readtime_da$juso)[3]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[4]),
+               label = unique(crash_readtime_da$juso)[4]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[5]),
+               label = unique(crash_readtime_da$juso)[5]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[6]),
+               label = unique(crash_readtime_da$juso)[6]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[7]),
+               label = unique(crash_readtime_da$juso)[7]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[8]),
+               label = unique(crash_readtime_da$juso)[8]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[9]),
+               label = unique(crash_readtime_da$juso)[9]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[10]),
+               label = unique(crash_readtime_da$juso)[10]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[11]),
+               label = unique(crash_readtime_da$juso)[11]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)[12]),
+               label = unique(crash_readtime_da$juso)[12]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(crash_readtime_da$juso)),
+               label = 'All')))))
+
+
+```
 
 ### 지도 시각화 
 ```{r}
