@@ -13,3 +13,15 @@ for(p in requiredPackages){
   }
   ------------------------------------------------------------------------------------
   # install.packages("https://cran.r-project.org/src/contrib/Archive/tidyverse/tidyverse_1.3.0.tar.gz",repos=NULL,type="source",INSTALL_opts=c('--no-lock'))
+-----------------------------------------------------------------------------------------
+$ cd /tmp
+$ wget https://download.osgeo.org/gdal/2.4.2/gdal-2.4.2.tar.gz
+$ tar xf gdal-2.4.2.tar.gz
+$ cd gdal-2.4.2
+$ sudo yum install libzstd-devel sqlite-devel libwebp-devel hdf5-devel
+$ ./configure --prefix=/export/apps/gdal/2.4.2 --with-proj=/export/apps/proj/6.1.1
+$ make -j4
+$ sudo mkdir -p /export/apps/gdal/2.4.2
+$ sudo chown -R aorth /export/apps/gdal/2.4.2
+$ make install
+$ sudo chown -R root:root /export/apps/gdal/2.4.2
