@@ -5,6 +5,11 @@ for(p in requiredPackages){
   if(!require(p,character.only = TRUE)) install.packages(p)
   library(p,character.only = TRUE)
   }
-  
+  -----------------------------------------------------------------------------------
+  requiredPackages = c('openssl','xml2','ids','httr','gargle','rvest','googledrive','googlesheets4')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p)
+  library(p,character.only = TRUE)
+  }
   ------------------------------------------------------------------------------------
   # install.packages("https://cran.r-project.org/src/contrib/Archive/tidyverse/tidyverse_1.3.0.tar.gz",repos=NULL,type="source",INSTALL_opts=c('--no-lock'))
