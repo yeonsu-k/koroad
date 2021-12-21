@@ -1,0 +1,7 @@
+requiredPackages = c('DBI','odbc','RPostgreSQL','RPostgres',
+		   'dplyr','tidyverse','data.table','DT','lubridate',
+		   'sp','leaflet','htmltools','plotly','RColorBrewer','tmaptools','showtext')
+for(p in requiredPackages){
+  if(!require(p,character.only = TRUE)) install.packages(p)
+  library(p,character.only = TRUE)
+  }

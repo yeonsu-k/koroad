@@ -8,7 +8,8 @@
     color : black;    
    }
 
-   html{font-size: 62.5%;}
+   html{
+    font-size: 62.5%;}
 
    header {
     width: 100vw; 
@@ -40,34 +41,39 @@
       padding-top : 70px;
     }
     
-    #subMenu{max-width:1080px; width:100vw; height: 30px; margin-bottom: 5px;}
-    
-    #subMenu ul li{
-      list-style: none;
-      color: white;  
-      background-color: #404441fb;  
-      float: left;
-      width: 50vw;
-      max-width:540px; 
-      line-height: 30px;  
-      vertical-align: middle;
-      text-align: center;   
+    #subMenu{
+      background-color: #404441fb; 
+      width:100vw; 
+      max-width:1080px; 
+      height: 30px;
+      margin-bottom: 5px;
     }
-   
-    #subMenu .Link {                               
-      text-decoration:none;                      
-      color: white;                              
-      display: block;                            
-      width: 100%;                             
+
+    #subMenu p {
+      color: #ffff;
       font-size: 1.5rem;                           
       font-weight: bold;                         
-      font-family: Arial; 
+      font-family: Arial;
+      line-height: 30px;  
+      text-align: center;   
+      text-decoration:none;                                                 
+      display: block;                                                       
     }
-   
-    #subMenu .Link:hover {                            
-      background-color: #555e56;    
+
+    #statis {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      width:100vw; 
+      max-width:1080px; 
     }
-    
+
+    #statis imgs{
+      width:80vw; 
+      max-width:1080px; 
+      display: block;
+    }
+  
     .container{
       display:flex;   /*추가*/
       flex-flow: column nowrap; /*추가*/
@@ -75,34 +81,15 @@
       margin: 0 auto;
      }
    
-     /* .content {
-       width: 500px;
-       height:450px;
-       margin-right: 30px;
-    } */
-
-
-   .block1-1 {
+   .block{
     max-width:1080px;
     width: 100vw;
-    height: 300px;
+    margin-top: 30px;
     margin-bottom: 30px;
+    border-bottom: 1px solid #404441fb;
     background-color: lightyellow;
   }
-  .block1-2 {
-    max-width:1080px;
-    width: 100vw;
-    height: 200px;
-    margin-bottom: 30px;
-    background-color: lightyellow;
-  }
-  .block1-3 {
-    max-width:1080px;
-    width: 100vw;
-    height: 250px;
-    background-color: lightyellow;
-  }
-
+  
   .footer_inner{
     width:100vw; height:120px;
     border-top:10px solid #fff;
